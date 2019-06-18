@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <title>Code Fellowship</title>
     </head>
     <body>
         <h1>Welcome to Code Fellowship!</h1>
+        <p>CodeFellowship allows people learning to code
+            the opportunity to connect with each other and
+            support each other on their coding journeys</p>
+        <a th:href="@{/signup}">Sign Up</a>
     </body>
 </html>

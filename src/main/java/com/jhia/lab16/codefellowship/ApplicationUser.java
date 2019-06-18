@@ -10,19 +10,32 @@ import javax.persistence.Id;
 
 @Entity
 public class ApplicationUser {
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
     String username;
     String password;
+    String firstName;
+    String lastName;
+    String dateOfBirth;
+    String bio;
 
     public ApplicationUser() {}
 
-    public ApplicationUser(String username, String password) {
+    public ApplicationUser(
+        String username,
+        String password,
+        String firstName,
+        String lastName,
+        String dateOfBirth,
+        String bio
+    ) {
         this.username = username;
-        this.password = this.bCryptPasswordEncoder.encode(password);
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.bio = bio;
     }
 }
