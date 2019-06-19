@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.Collection;
 
 @Entity
@@ -21,7 +22,7 @@ public class ApplicationUser implements UserDetails {
     String password;
     String firstName;
     String lastName;
-    String dateOfBirth;
+    LocalDate dateOfBirth;
     String bio;
 
     public ApplicationUser() {}
@@ -31,7 +32,7 @@ public class ApplicationUser implements UserDetails {
         String password,
         String firstName,
         String lastName,
-        String dateOfBirth,
+        LocalDate dateOfBirth,
         String bio
     ) {
         this.username = username;
@@ -40,6 +41,26 @@ public class ApplicationUser implements UserDetails {
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.bio = bio;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getBio() {
+        return bio;
     }
 
     @Override
