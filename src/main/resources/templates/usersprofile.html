@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>User Profile</title>
+    <link href="/style.css" rel="stylesheet">
 </head>
 <body>
 <h1>Welcome, <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></h1>
@@ -13,5 +14,6 @@
 <p th:text="${user.bio}"></p>
 <h2>DOB</h2>
 <p th:text="${user.dateOfBirth}"></p>
+<a href="/logout">Log Out</a>
 </body>
 </html>
