@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+</head>
+<body>
+<h1>Welcome, <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></h1>
+<img src="https://pngimage.net/wp-content/uploads/2018/05/default-user-profile-image-png-2.png" width="150" height="150"/>
+<h2>Username</h2>
+<p th:text="${user.username}"></p>
+<h2>Bio</h2>
+<p th:text="${user.bio}"></p>
+<h2>DOB</h2>
+<p th:text="${user.dateOfBirth}"></p>
+</body>
+</html>
