@@ -39,6 +39,11 @@ public class ApplicationUserController {
         return new RedirectView("/");
     }
 
+    @GetMapping("/login")
+    public String getLogin() {
+        return "login";
+    }
+
     @GetMapping("/signup")
     public String getSignUp() {
         return "signup";
