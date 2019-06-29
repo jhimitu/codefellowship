@@ -32,6 +32,9 @@ public class ApplicationUser implements UserDetails {
     @ManyToMany
     Set<ApplicationUser> following;
 
+    @ManyToMany
+    Set<ApplicationUser> followers;
+
     public ApplicationUser() {}
 
     public ApplicationUser(
