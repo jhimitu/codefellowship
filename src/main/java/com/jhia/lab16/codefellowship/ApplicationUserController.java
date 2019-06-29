@@ -32,6 +32,15 @@ public class ApplicationUserController {
     @Autowired
     PasswordEncoder bCryptPasswordEncoder;
 
+    @GetMapping("/users")
+    public String getAllUsers(Model m) {
+        Iterable<ApplicationUser> users = applicationUserRepository.findAll();
+        System.out.println("USERS: " + users);
+
+        m.addAttribute("users", users);
+        return "users";
+    }
+
     @PostMapping("/users")
     public RedirectView createUser(
             String username,
@@ -74,8 +83,6 @@ public class ApplicationUserController {
     public String getUsersProfile(Model m, Principal p) {
         ApplicationUser user = applicationUserRepository.getByUsername(p.getName());
         List<Post> posts = user.posts;
-
-        Iterable<ApplicationUser> usersToFollowIterable = applicationUserRepository.findAll();
 
         m.addAttribute("posts", posts);
         m.addAttribute("user", user);
