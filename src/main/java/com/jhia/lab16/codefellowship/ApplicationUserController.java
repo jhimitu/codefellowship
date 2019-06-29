@@ -64,7 +64,10 @@ public class ApplicationUserController {
         );
 
         applicationUserRepository.save(newUser);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(newUser, null, new ArrayList<>());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+            newUser,
+            null, new ArrayList<>()
+        );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return new RedirectView("/myprofile");
     }
@@ -77,6 +80,19 @@ public class ApplicationUserController {
         m.addAttribute("posts", posts);
         m.addAttribute("user", user);
         return "profile";
+    }
+
+    @PostMapping("/users/{id}")
+    public RedirectView followUser(@PathVariable long id, Principal p) {
+        ApplicationUser currentUser = applicationUserRepository.getByUsername(p.getName());
+        ApplicationUser otherUser = applicationUserRepository.findById(id).get();
+
+        currentUser.following.add(otherUser);
+        otherUser.followers.add(currentUser);
+
+        applicationUserRepository.save(currentUser);
+        applicationUserRepository.save(otherUser);
+        return new RedirectView("/users");
     }
 
     @GetMapping("/myprofile")
