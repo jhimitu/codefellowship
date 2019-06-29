@@ -20,7 +20,7 @@
 
         <h2>Posts</h2>
         <ul th:each="post : ${posts}">
-            <li><span th:text="${post.body}"></span></li>
+            <li><span th:text="${post.body}"></span> <span th:text="${post.createdAt}"></span></li>
         </ul>
 
         <form action="/myprofile" method="POST">
