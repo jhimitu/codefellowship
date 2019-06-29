@@ -63,6 +63,9 @@ public class ApplicationUserController {
     @GetMapping("/users/{id}")
     public String getUser(@PathVariable long id, Model m, Principal p) {
         ApplicationUser user = applicationUserRepository.findById(id).get();
+        List<Post> posts = user.posts;
+
+        m.addAttribute("posts", posts);
         m.addAttribute("user", user);
         return "profile";
     }
