@@ -1,5 +1,6 @@
 package com.jhia.lab16.codefellowship;
 
+import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,12 +18,16 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ApplicationUserController {
 
     @Autowired
     ApplicationUserRepository applicationUserRepository;
+
+    @Autowired
+    PostRepository postRepository;
 
     @Autowired
     PasswordEncoder bCryptPasswordEncoder;
@@ -65,8 +70,22 @@ public class ApplicationUserController {
     @GetMapping("/myprofile")
     public String getUsersProfile(Model m, Principal p) {
         ApplicationUser user = applicationUserRepository.getByUsername(p.getName());
+        List<Post> posts = user.posts;
+        System.out.println("POSTS: " + posts);
+        Iterable<ApplicationUser> usersToFollowIterable = applicationUserRepository.findAll();
+
+        m.addAttribute("posts", posts);
         m.addAttribute("user", user);
         return "usersprofile";
+    }
+
+    @PostMapping("/myprofile")
+    public RedirectView createPost(Principal p, String body, LocalDate createdAt) {
+        ApplicationUser user = applicationUserRepository.getByUsername(p.getName());
+        Post post = new Post(body, createdAt);
+        postRepository.save(post);
+
+        return new RedirectView("/myprofile");
     }
 
     @GetMapping("/login")
