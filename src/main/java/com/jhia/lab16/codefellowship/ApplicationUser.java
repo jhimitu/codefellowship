@@ -5,12 +5,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class ApplicationUser implements UserDetails {
@@ -18,12 +16,17 @@ public class ApplicationUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
+
+    @Column(unique = true)
     String username;
     String password;
     String firstName;
     String lastName;
     LocalDate dateOfBirth;
     String bio;
+
+    @OneToMany(mappedBy = "applicationUser")
+    List<Post> posts;
 
     public ApplicationUser() {}
 
