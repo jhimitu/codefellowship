@@ -17,7 +17,8 @@ public class Post {
 
     public Post() { }
 
-    public Post(String body, LocalDate createdAt) {
+    public Post(String body, LocalDate createdAt, ApplicationUser user) {
+        this.applicationUser = user;
         this.body = body;
         this.createdAt = createdAt;
     }

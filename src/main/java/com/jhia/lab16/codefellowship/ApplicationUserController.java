@@ -71,7 +71,7 @@ public class ApplicationUserController {
     public String getUsersProfile(Model m, Principal p) {
         ApplicationUser user = applicationUserRepository.getByUsername(p.getName());
         List<Post> posts = user.posts;
-        System.out.println("POSTS: " + posts);
+
         Iterable<ApplicationUser> usersToFollowIterable = applicationUserRepository.findAll();
 
         m.addAttribute("posts", posts);
@@ -80,9 +80,9 @@ public class ApplicationUserController {
     }
 
     @PostMapping("/myprofile")
-    public RedirectView createPost(Principal p, String body, LocalDate createdAt) {
+    public RedirectView createPost(Principal p, String body) {
         ApplicationUser user = applicationUserRepository.getByUsername(p.getName());
-        Post post = new Post(body, createdAt);
+        Post post = new Post(body, LocalDate.now(), user);
         postRepository.save(post);
 
         return new RedirectView("/myprofile");
