@@ -8,7 +8,7 @@
     <body>
         <h1>Connect with your fellow coders!</h1>
         <ul th:each="user : ${users}">
-            <li th:text="${user.username}">User</li>
+            <li><a th:href="@{/users/{id}(id=${user.id})}"><span th:text="${user.username}"></span></a></li>
         </ul>
     </body>
 </html>
