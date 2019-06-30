@@ -8,6 +8,10 @@
     <body>
         <h1><span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span>'s Profile</h1>
         <img src="https://pngimage.net/wp-content/uploads/2018/05/default-user-profile-image-png-2.png" width="150" height="150"/>
+        <br />
+        <form th:action="'/users/' + ${user.id}" method="POST">
+            <button type="submit">Follow</button>
+        </form>
 
         <h2>Username</h2>
         <p th:text="${user.username}"></p>

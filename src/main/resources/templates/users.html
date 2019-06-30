@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Code Fellowship | Find People</title>
+        <link href="/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1>Connect with your fellow coders!</h1>
+        <ul th:each="user : ${users}">
+            <li><a th:href="@{/users/{id}(id=${user.id})}"><span th:text="${user.username}"></span></a></li>
+        </ul>
+    </body>
+</html>

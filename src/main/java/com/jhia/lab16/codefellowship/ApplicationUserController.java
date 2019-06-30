@@ -18,7 +18,9 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class ApplicationUserController {
@@ -31,6 +33,15 @@ public class ApplicationUserController {
 
     @Autowired
     PasswordEncoder bCryptPasswordEncoder;
+
+    @GetMapping("/users")
+    public String getAllUsers(Model m) {
+        Iterable<ApplicationUser> users = applicationUserRepository.findAll();
+        System.out.println("USERS: " + users);
+
+        m.addAttribute("users", users);
+        return "users";
+    }
 
     @PostMapping("/users")
     public RedirectView createUser(
@@ -55,7 +66,10 @@ public class ApplicationUserController {
         );
 
         applicationUserRepository.save(newUser);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(newUser, null, new ArrayList<>());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+            newUser,
+            null, new ArrayList<>()
+        );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return new RedirectView("/myprofile");
     }
@@ -70,12 +84,32 @@ public class ApplicationUserController {
         return "profile";
     }
 
+    @PostMapping("/users/{id}")
+    public RedirectView followUser(@PathVariable long id, Principal p) {
+        ApplicationUser currentUser = applicationUserRepository.getByUsername(p.getName());
+        ApplicationUser otherUser = applicationUserRepository.findById(id).get();
+
+        currentUser.following.add(otherUser);
+        otherUser.followers.add(currentUser);
+
+        applicationUserRepository.save(currentUser);
+        applicationUserRepository.save(otherUser);
+        return new RedirectView("/users");
+    }
+
+    @GetMapping("/feed")
+    public String getFeed(Model m, Principal p) {
+        ApplicationUser user = applicationUserRepository.getByUsername(p.getName());
+        Set<ApplicationUser> following = user.following;
+
+        m.addAttribute("following", following);
+        return "feed";
+    }
+
     @GetMapping("/myprofile")
     public String getUsersProfile(Model m, Principal p) {
         ApplicationUser user = applicationUserRepository.getByUsername(p.getName());
         List<Post> posts = user.posts;
-
-        Iterable<ApplicationUser> usersToFollowIterable = applicationUserRepository.findAll();
 
         m.addAttribute("posts", posts);
         m.addAttribute("user", user);

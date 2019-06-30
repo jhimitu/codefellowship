@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Code Fellowship | News Feed</title>
+        <link href="/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1>News Feed</h1>
+        <div th:each="user : ${following}">
+            <ul>
+                <li th:each="post : ${user.posts}">
+                    <span th:text="${post.body}"></span>
+                    <span th:text="${post.createdAt}"></span>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
