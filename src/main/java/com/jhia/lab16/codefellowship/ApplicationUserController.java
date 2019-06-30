@@ -18,7 +18,9 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class ApplicationUserController {
@@ -93,6 +95,15 @@ public class ApplicationUserController {
         applicationUserRepository.save(currentUser);
         applicationUserRepository.save(otherUser);
         return new RedirectView("/users");
+    }
+
+    @GetMapping("/feed")
+    public String getFeed(Model m, Principal p) {
+        ApplicationUser user = applicationUserRepository.getByUsername(p.getName());
+        Set<ApplicationUser> following = user.following;
+
+        m.addAttribute("following", following);
+        return "feed";
     }
 
     @GetMapping("/myprofile")
